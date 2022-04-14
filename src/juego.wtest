@@ -1,0 +1,41 @@
+import jugadoresPersonajes.*
+import armas.*
+import elementos.*
+
+test "A Luisa se le aparecen Aurora y el Castillo mientras tiene a Mario" {
+	luisa.personajeActivo(mario)
+	luisa.aparece(aurora)
+	luisa.aparece(castillo)
+	
+	assert.equals(45,mario.valorRecolectado())
+	assert.that(mario.esFeliz())
+	assert.equals(170,castillo.nivelDeDefensa())
+}
+
+test "Mario encuentra a Tipa y Floki con ballesta encuentra a Aurora y el Castillo" {
+	floki.arma(jabalina)
+	luisa.personajeActivo(mario)
+	luisa.aparece(tipa)
+	luisa.personajeActivo(floki)
+	luisa.aparece(aurora)
+	luisa.aparece(castillo)
+	
+	assert.equals(16,mario.valorRecolectado())
+	assert.equals(9,tipa.altura())
+	assert.notThat(mario.esFeliz())
+	assert.notThat(aurora.estaViva())
+	assert.equals(150,castillo.nivelDeDefensa())
+	assert.notThat(jabalina.estaCargada())
+}
+
+test "floki tiene como arma la ballesta, luisa tiene como personaje activo a floki. A luisa le aparecen primero aurora y después el castillo." {
+	floki.arma(ballesta)
+	luisa.personajeActivo(floki)
+	luisa.aparece(aurora)
+	luisa.aparece(castillo)
+	
+	assert.equals(0,mario.valorRecolectado())
+	assert.that(aurora.estaViva())
+	assert.equals(146,castillo.nivelDeDefensa())
+	assert.equals(8,ballesta.flechas())
+}
